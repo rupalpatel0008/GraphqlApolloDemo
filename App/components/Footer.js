@@ -28,7 +28,7 @@ const FilterLink = ({ filter, children }) => (
 );
 
 const Footer = () => (
-  <View style={{ flexDirection: 'row' }}>
+  <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
     Show: <FilterLink filter="SHOW_ALL">All</FilterLink>
     {', '}
     <FilterLink filter="SHOW_ACTIVE">Active</FilterLink>

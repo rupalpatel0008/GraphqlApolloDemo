@@ -6,10 +6,9 @@
 
 import React, { Component } from 'react';
 import {
-  Platform,
-  StyleSheet,
   Text,
-  View
+  View,
+  ScrollView,
 } from 'react-native';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloLink } from 'apollo-link';
@@ -36,6 +35,13 @@ const typeDefs = `
     todos: [Todo]
   }
 `;
+
+const titleStyle = {
+  fontSize: 15,
+  marginLeft: 5,
+  marginTop: 30,
+  fontWeight: 'bold',
+};
 
 export default class App extends Component {
   constructor(...args) {
@@ -67,12 +73,18 @@ export default class App extends Component {
   render() {
     return (
       <ApolloProvider client={this.client}>
-        {/* <PostList /> */}
         <View style={{ flex: 1 }}>
-          <TodoForm />
-          <TodoDelete />
-          <TodoList />
-          <Footer />
+          <ScrollView>
+            <Text style={titleStyle}>Network Data</Text>
+            <PostList />
+          </ScrollView>
+          <ScrollView>
+            <Text style={titleStyle}>Local Data</Text>
+            <TodoForm />
+            <TodoDelete />
+            <TodoList />
+            <Footer />
+          </ScrollView>
         </View>
       </ApolloProvider>
     );
