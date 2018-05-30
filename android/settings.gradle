@@ -1,0 +1,3 @@
+rootProject.name = 'GraphqlApolloDemo'
+
+include ':app'
