@@ -17,8 +17,25 @@ import { HttpLink } from 'apollo-link-http';
 import { withClientState } from 'apollo-link-state';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloClient } from 'apollo-client';
-import PostList from './PostList';
+import { defaults, resolvers } from './resolver';
+import { Footer, Link, Todo, TodoForm, TodoDelete, TodoList, PostList } from './components';
 
+const typeDefs = `
+  type Todo {
+    id: Int!
+    text: String!
+    completed: Boolean!
+  }
+  type Mutation {
+    addTodo(text: String!): Todo
+    toggleTodo(id: Int!): Todo
+    deleteTodo(id: Int!): Todo
+  }
+  type Query {
+    visibilityFilter: String
+    todos: [Todo]
+  }
+`;
 
 export default class App extends Component {
   constructor(...args) {
@@ -35,38 +52,28 @@ export default class App extends Component {
     // });
     // console.log('this.client = ', this.client);
     const cache = new InMemoryCache();
-    const stateLink = withClientState({
-      cache,
-      resolvers: {
-        Mutation: {
-          updateNetworkStatus: (_, { isConnected }, { cache }) => {
-            const data = {
-              networkStatus: {
-                __typename: 'NetworkStatus',
-                isConnected
-              },
-            };
-            cache.writeData({ data });
-            return null;
-          },
-        },
-      }
-    });
+    // Our local state link
+    const stateLink = withClientState({ resolvers, defaults, cache, typeDefs });
     this.client = new ApolloClient({
+      cache,
       link: ApolloLink.from([
         stateLink,
         new HttpLink({
           uri: 'http://localhost:8080/graphql'
         })
       ]),
-      cache
     });
   }
   render() {
     return (
       <ApolloProvider client={this.client}>
-        <PostList />
-        {/* <View/> */}
+        {/* <PostList /> */}
+        <View style={{ flex: 1 }}>
+          <TodoForm />
+          <TodoDelete />
+          <TodoList />
+          <Footer />
+        </View>
       </ApolloProvider>
     );
   }
