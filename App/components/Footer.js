@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -29,11 +29,13 @@ const FilterLink = ({ filter, children }) => (
 
 const Footer = () => (
   <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
-    Show: <FilterLink filter="SHOW_ALL">All</FilterLink>
-    {', '}
-    <FilterLink filter="SHOW_ACTIVE">Active</FilterLink>
-    {', '}
-    <FilterLink filter="SHOW_COMPLETED">Completed</FilterLink>
+    <Text>
+      Show: <FilterLink filter="SHOW_ALL">All</FilterLink>
+      {', '}
+      <FilterLink filter="SHOW_ACTIVE">Active</FilterLink>
+      {', '}
+      <FilterLink filter="SHOW_COMPLETED">Completed</FilterLink>
+    </Text>
   </View>
 );
 

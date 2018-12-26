@@ -1,4 +1,7 @@
-import { AppRegistry } from 'react-native';
-import App from './App/App';
+/** @format */
 
-AppRegistry.registerComponent('GraphqlApolloDemo', () => App);
+import {AppRegistry} from 'react-native';
+import App from './App/App';
+import {name as appName} from './app.json';
+
+AppRegistry.registerComponent(appName, () => App);
